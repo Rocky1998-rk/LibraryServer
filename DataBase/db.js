@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
+import env from "dotenv"
+
+env.config();
 
  const dbConnect = async () => {
     try {
 
-        await mongoose.connect("mongodb://127.0.0.1:27017/LibraryData?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongoose+2.3.9")
+        await mongoose.connect(process.env.MONGO_URL)
         
         console.log("Connected to MongoDB")
 
