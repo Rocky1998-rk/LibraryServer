@@ -1,6 +1,8 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose  from "mongoose";
 
-const bookSchema = new mongoose.Schema({
+const bookSchema =  mongoose.Schema(
+
+  {
 
   title: {
     type: String,
@@ -17,6 +19,12 @@ const bookSchema = new mongoose.Schema({
     type: String
   },
 
+   user: {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User",
+            required: true,
+        },
+
   rating: {
     type: Number,
     default: 0
@@ -28,6 +36,11 @@ const bookSchema = new mongoose.Schema({
 
 }, 
 
-{ timestamps: true });
+{ timestamps: true }
 
-module.exports = mongoose.model("Book", bookSchema);
+
+);
+
+    const Book = mongoose.model("Book", bookSchema);
+    export default Book;
+ 

@@ -25,16 +25,12 @@ const borrowSchema = new mongoose.Schema({
   },
 
   returnDate: {
-    type: Date
+    type: Date,
+    default: null
   },
 
-  isReturned: {
-    type: Boolean,
-    default: false
-  },
-  
 }, 
 
 { timestamps: true });
 
-module.exports = mongoose.model("Borrow", borrowSchema);
+export const Borrow = mongoose.model("Borrow", borrowSchema);

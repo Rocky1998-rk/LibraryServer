@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const userSchema = new mongoose .Schema(
+  const userSchema = new mongoose.Schema(
     {
         name:{
             type:String,
@@ -17,6 +17,11 @@ const userSchema = new mongoose .Schema(
             type:String,
             required:[true,"password is a required field"],
             unique:true,
+        },
+
+          book:{
+            type:[mongoose.Schema.Types.ObjectId],
+            ref:"Book"
         },
 
     },
