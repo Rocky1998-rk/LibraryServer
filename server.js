@@ -15,6 +15,7 @@ dotenv.config();
 //   exposedHeaders:["Authorization"]
 // }));
 
+   app.use(express.json());
 
    const allowedOrigins = [
   "http://localhost:5174","https://local-library-portal-full-stack-dev.vercel.app"]

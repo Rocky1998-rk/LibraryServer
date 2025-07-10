@@ -47,44 +47,45 @@ try {
 
 
 const loginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log("Email:", email, "Password:", password);
 
-    try {
-        const {email, password} = req.body;
-        console.log("Email:", email, "Password:", password);
-
-        if(!email || !password){
-            return res.status(400).json({message:"all fields are required"})
-        }
-
-        const existingUser = await User.findOne({email});
-
-        if(existingUser.email !== email){
-            return res.status(401).json({message:"Incorrect Email"})
-        }
-
-       if (!existingUser) {
-        return res.status(404).json({message:"User Not found Signup please"})
-
-      }
-        const result = await bcrypt.compare(password, existingUser.password);
-        console.log("result:", result);
-
-        if(!result){
-            return res.status(401).json({message:"Incorrect Password"})
-        }
-
-        const token = jwt.sign({name:existingUser.name, id:existingUser._id},"Rocky", {expiresIn : "3h"});
-        res.setHeader("authorization",`Bearer ${token}`);
-
-        res.status(200).json({message:"Successfully Login User", existingUser: existingUser})
-        
-    } catch (error) {
-
-        res.status(500).json({message:"failed to load Api"})
-        console.log(error.message)
+    if (!email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
     }
-      
+
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found. Please sign up." });
+    }
+
+    const result = await bcrypt.compare(password, existingUser.password);
+    console.log("result:", result);
+
+    if (!result) {
+      return res.status(401).json({ message: "Incorrect Password" });
+    }
+
+    const token = jwt.sign(
+      { name: existingUser.name, id: existingUser._id },
+      "Rocky",
+      { expiresIn: "3h" }
+    );
+
+    res.setHeader("authorization", `Bearer ${token}`);
+
+    res.status(200).json({
+      message: "Successfully logged in",
+      existingUser: existingUser,
+    });
+  } catch (error) {
+    console.error("Login Error:", error.message);
+    res.status(500).json({ message: "failed to load Api", error: error.message });
+  }
 };
+
 
 
 
