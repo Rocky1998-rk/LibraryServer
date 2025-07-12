@@ -56,12 +56,12 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin:"https://local-library-portal-full-stack-dev.vercel.app",
-  methods: ["GET", "POST", "PUT","PATCH","DELETE","OPTIONS"],
+  methods: ["GET", "POST", "PUT","PATCH","DELETE"],
   exposedHeaders: ["Authorization"],
   credentials: true,
 }));
 
-app.options("*", cors());
+
 
 app.use(express.json());
 app.use("/api", Route);
