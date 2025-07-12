@@ -53,22 +53,20 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
 
-//  Use static CORS config
 app.use(cors({
   origin:"https://local-library-portal-full-stack-dev.vercel.app",
+  methods: ["GET", "POST", "PUT","PATCH","DELETE","OPTIONS"],
+  exposedHeaders: ["Authorization"],
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  exposedHeaders: ["Authorization"]
 }));
 
 
-// ✅ API Routes
+app.use(express.json());
 app.use("/api", Route);
 
 
-// ✅ DB + Start Server
+// DB + Start Server
 (async function () {
   await dbConnect();
   app.listen(PORT, () => console.log(`server has started : ${PORT}`));
